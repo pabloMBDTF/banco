@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+<body>
+
+
+
+    <div class="container">
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+
+        <h1>Iniciar Sesion</h1>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input autofocus type="text" autocomplete="off" name="username" placeholder="nombre" required>
+            </div>
+            <div class="form-group">
+                <input type="password" autocomplete="off" name="password" placeholder="Password" required>
+            </div>
+            <input class="btn btn-primary my-4" type="submit" value="Entrar">
+        </form>
+        No tienes cuenta? Crea una desde acá. <a href="{% url 'registro-usuario' %}">Register here.</a><br>
+        </div>
+    </div>
+
+</body>
+</html>
+
+    
+

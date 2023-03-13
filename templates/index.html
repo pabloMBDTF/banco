@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %} Incio {% endblock %}
+
+{% block contenido %}
+
+    {% load humanize %}
+
+  <br>
+  <br>
+
+  {% if request.user.is_superuser %}
+  {% endif %}
+  <br>
+  <br>
+  <br>
+
+
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th> 
+          <th scope="col">Apellido</th>
+          <th scope="col">Cedula</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for usuario in usuarios %}
+          {% if usuario.is_superuser %}
+          <h1>{{usuario.username}}</h1>
+          {% else %}
+
+            <tr>
+              <th>{{usuario.username}}</th>
+              <td>{{usuario.last_name}}</td>
+              <td>{{usuario.cedula}}</td>
+              <td>
+                  <a href="{% url 'actualizar-usuario' usuario.id %}" class="btn btn-warning">Actualizar</a>
+                  <a href="{% url 'eliminar-usuario' usuario.id %}" class="btn btn-danger">Eliminar</a>
+                  <a href="{% url 'informacion-usuario' usuario.id %}" class="btn btn-success">Registros</a>   
+                  <a href="{% url 'prestamo' usuario.id %}" class="btn btn-success">Prestamo</a>
+                </td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+  </table>
+  <br>
+  <h1>Ganancia actual: {{ganaciaActual | floatformat:"0" | intcomma}}</h1>
+  <h1>Proyección de Ganancia: {{proyeccionGanacia | floatformat:"0" | intcomma}}</h1>
+
+{% endblock %}

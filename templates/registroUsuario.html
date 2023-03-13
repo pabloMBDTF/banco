@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %} Registro {% endblock %}
+
+{% if message %}
+    <div>{{ message }}</div>
+{% endif %} 
+
+{% block contenido %}
+    <h1>Registro de usuario</h1>
+    <form method="POST">
+        {% csrf_token %}
+
+        {{form.as_p}}
+
+        <input class="btn btn-primary my-4" type="submit" value="{{btn}}"></input>
+    </form>
+    <br>
+    <br>
+    {% if redireccion == "login" %}
+        <a href="{% url 'login' %}"><button type="button" class="btn btn-dark"><-</button></a>
+    {% else %}
+        <a href="{% url 'index' %}"><button type="button" class="btn btn-dark"><-</button></a>
+    {% endif %}
+{% endblock %}

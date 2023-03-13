@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title  %}
+informacion del usuario 
+{% endblock %}
+
+
+{% block contenido  %}
+
+    {% load humanize %}
+
+    {% if user.socio %}
+        <a href="{% url 'fondo' user.id %}" class="btn btn-success">Fondo</a>
+    {% endif %}
+
+
+    <h1>{{user.username}} {{user.last_name}}</h1>
+
+    {% if inversion is False and user.socio == True %}
+        <h2>El usuario aún no ha realizado ahorros al fondo</h2>
+
+    {% elif user.socio != True %}
+        <h3>Las personas de terceros no necesitan invertir en el fondo para solicitar un prestamo</h3>
+
+    {% else %}
+        <h2>El ha invertido en el fondo la cantiadad de: {{inversion.ahorro}}</h2>
+    {% endif %}
+
+    {% if prestamo is False %}
+        <h2>Al usuario no se le ha concedido un prestamo aún</h2>
+    {% else %}
+    
+        <h2>El ha realizado un prestamos de {{prestamo.prestamo | intcomma}} el día {{prestamo.fecha}} a {{prestamo.cuotasPrestamo}} cuotas pagando cada mes {{prestamoInteres | floatformat:"0" | intcomma}}</h2>
+
+        <h2>{{prestamo.cuotasPorPagar}} cuotas pagadas de {{prestamo.cuotasPrestamo}}</h2>
+    {% endif %}
+
+    <hr>
+
+    {% if prestamo.cuotasPrestamo != prestamo.cuotasPorPagar%}
+
+            <form action="{% url 'informacion-usuario' user.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label id="cuotas">Ingrese el número de cuotas a pagar</label>
+                    <input type="number" name="cuotas" min="1" max="{{prestamo.cuotasPrestamo}}" required>
+                </div>
+                
+                <input class="btn btn-primary my-4" type="submit" value="Pagar">
+            </form>
+    {% else %}
+        <h1>Usted ha pagado todas las cuotas o no tiene asignado un prestamos</h1>
+    {% endif %}
+
+
+
+   
+{% endblock %}

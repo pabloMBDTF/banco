@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %} prestamo {% endblock %}
+
+
+{% block contenido %}
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <h1>Dar prestamo a {{prestamista.username}}</h1>
+    <form action="{% url 'prestamo' prestamista.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus type="text" autocomplete="off" name="prestamo" placeholder="prestamo">
+            <p>Fondo total del banco: {{fondoTotal}}</p>
+        </div>
+        <div class="form-group">
+            <input type="text" autocomplete="off" name="cuotas" placeholder="cuotas">
+        </div>
+        <input class="btn btn-primary my-4" type="submit" value="Dar prestamo">
+    </form>
+    <a href="{% url 'index' %}"><button type="button" class="btn btn-dark">Home</button></a>
+
+    </div>
+
+{% endblock %}

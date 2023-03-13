@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+
+{% block title %} Ingresar {% endblock %}
+
+{% block contenido %}
+    <form method="post">{% csrf_token %}
+     
+        <p>¿Seguro de querer eliminar al usuario: {{ usuario}}?</p>
+
+        <input type="submit" value="Borrar">
+    </form>
+    <br>
+    <br>
+    <a href="{% url 'index' %}"><button type="button" class="btn btn-dark">Home</button></a>
+{% endblock %}
